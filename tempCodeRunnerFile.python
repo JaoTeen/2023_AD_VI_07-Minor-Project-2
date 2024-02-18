@@ -1,0 +1,18 @@
+def check_bin(n):
+    if(n==1):
+        return True
+    elif(n==0):
+        return False
+    
+def q4():
+    x1=check_bin(int(input("Input value 1 : ")))
+    x2=check_bin(int(input("Input value 2 : ")))
+    x3=check_bin(int(input("Input value 3 : ")))
+    print("*"40)
+    x1=int(input("Input value 1 : "))
+    x2=int(input("Input value 2 : "))
+    x3=int(input("Input value 3 : "))
+    print("*"40)
+
+q4()
+    
