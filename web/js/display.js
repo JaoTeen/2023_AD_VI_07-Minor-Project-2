@@ -1,34 +1,38 @@
-function createRow(container,studentName,samples){
-   const row=document.createElement("div");
+function createRow(container, studentName, samples) {
+   const row = document.createElement("div");
    row.classList.add("row");
    container.appendChild(row);
 
-   const rowLabel=document.createElement("div");
-   rowLabel.innerHTML=studentName;
+   const rowLabel = document.createElement("div");
+   rowLabel.innerHTML = studentName;
    rowLabel.classList.add("rowLabel");
    row.appendChild(rowLabel);
 
-   for(let sample of samples){
-      const {id,label,student_id,correct}=sample;
+   for (let sample of samples) {
+      const { id, label, student_id, correct } = sample;
 
-      const sampleContainer=document.createElement("div");
-      sampleContainer.id="sample_"+id;
-      sampleContainer.onclick=()=>
-         handleClick(sample,false);
+      const sampleContainer = document.createElement("div");
+      sampleContainer.id = "sample_" + id;
+      sampleContainer.onclick = (evt) => {
+         if (evt.ctrlKey) {
+            toggleFlaggedSample(sample);
+         } else {
+            handleClick(sample, false);
+         }
+      }
       sampleContainer.classList.add("sampleContainer");
-      if(correct){
-         sampleContainer.style.backgroundColor="lightgreen";
+      if (correct) {
+         sampleContainer.style.backgroundColor = "#006";
       }
 
-      const sampleLabel=document.createElement("div");
-      sampleLabel.innerHTML=label;
+      const sampleLabel = document.createElement("div");
+      sampleLabel.innerHTML = label;
       sampleContainer.appendChild(sampleLabel);
 
-      const img=document.createElement('img');
-      img.setAttribute("loading","lazy");
-      img.src=constants.IMG_DIR+'/'+id+'.png';
+      const img = document.createElement("img");
+      img.src = constants.IMG_DIR + "/" + id + ".png";
       img.classList.add("thumb");
-      if(utils.flaggedUsers.includes(student_id)){
+      if (utils.flaggedUsers.includes(student_id)) {
          img.classList.add("blur");
       }
       sampleContainer.appendChild(img);
@@ -37,27 +41,27 @@ function createRow(container,studentName,samples){
    }
 }
 
-function handleClick(sample,doScroll=true){
-   if(sample==null){
-      [...document.querySelectorAll('.emphasize')].
-         forEach((e)=>e.classList.remove('emphasize'));
+function handleClick(sample, doScroll = true) {
+   if (sample == null) {
+      [...document.querySelectorAll(".emphasize")].forEach((e) =>
+         e.classList.remove("emphasize")
+      );
       return;
    }
-   const el=document.getElementById(
-      "sample_"+sample.id
-   );
-   if(el.classList.contains("emphasize")){
+   const el = document.getElementById("sample_" + sample.id);
+   if (el.classList.contains("emphasize")) {
       el.classList.remove("emphasize");
       chart.selectSample(null);
       return;
    }
-   [...document.querySelectorAll('.emphasize')].
-      forEach((e)=>e.classList.remove('emphasize'));
+   [...document.querySelectorAll(".emphasize")].forEach((e) =>
+      e.classList.remove("emphasize")
+   );
    el.classList.add("emphasize");
-   if(doScroll){
+   if (doScroll) {
       el.scrollIntoView({
-         behavior:'auto',
-         block:'center'
+         behavior: "auto",
+         block: "center",
       });
    }
    chart.selectSample(sample);
@@ -72,5 +76,16 @@ function toggleInput(){
       toggleButton.innerHTML="Toggle to Input Area";
       inputContainer.style.display="none";
       chart.hideDynamicPoint();
+   }
+}
+
+function toggleOutput(){
+   if(confusionContainer.style.display=="none"){
+      toggleButton2.innerHTML="Toggle to Graph Output";
+      confusionContainer.style.display="block";
+
+   }else{
+      toggleButton2.innerHTML="Toggle to Matrix Output";
+      confusionContainer.style.display="none";
    }
 }

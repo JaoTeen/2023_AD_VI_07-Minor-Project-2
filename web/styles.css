@@ -1,102 +1,281 @@
-body{
-font-family:Arial;
-background-color:rgba(81, 76, 76, 0.82);
-overscroll-behavior:none;
+
+body {
+   font-family: Arial;
+   overscroll-behavior: none;
+   /**compatibility*/
+   touch-action: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   user-select: none;
+   /*background-color: skyblue;*/
+   /**style change*/
+   background-color: #000;
+   color: white;
+   margin: 0;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   user-select: none;
 }
-#content h1,#content span{
-color: white;
+nav {
+   position: fixed;
+   height: 50px;
+   width: 450px;
+   margin-left: 10px;
+   background: #34495e;
+   border-radius: 8px;
 }
-h1, h2, #statistics, .rowLabel{
-color: white;
+
+.nav-list {
+   list-style-type: none;
+   margin-top: 2px;
+   padding: 0;
 }
-#content{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
+
+.nav-list li {
+   float: left;
+   position: relative;
 }
-button{
-cursor:pointer;
-border:none;
-padding:2px 10px 2px 10px;
-height:22px;
-border-radius:5px;
-border-color: white;
-background-color: black;
-color: white;
+
+.nav-list li a, .dropbtn {
+   display: inline-block;
+   color: white;
+   text-align: center;
+   padding: 14px 16px;
+   text-decoration: none;
 }
-button:hover{
-background-color:rgb(76, 76, 78);
+
+.dropdown{
+   color: #fb5958;
+   background-color: #34495e;
+}
+
+.nav-list li a:hover, .dropdown:hover .dropbtn {
+   background-color: #34495e;
+   color: #fb5958;
+}
+
+.dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: #34495e;
+   min-width: 160px;
+   color: #fb5958;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+}
+
+.dropdown-content a {
+   color: black;
+   padding: 12px 16px;
+   text-decoration: none;
+   display: block;
+   text-align: left;
+}
+
+.dropdown-content a:hover {
+   background-color: #34495e;
+}
+
+.dropdown:hover .dropdown-content {
+   display: block;
+}
+
+ 
+
+h2{
+   padding: 20px;
+}
+#content {
+   position: absolute;
+   padding-top: 70px;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+}
+button {
+   cursor: pointer;
+   border-radius: 5px;
+   color: white;
+   /*border: none;
+   padding: 2px 10px 2px 10px;
+   height: 22px;
+   background-color: navy;*/
+   /**style change*/
+   border: transparent;
+   padding: 0.75rem 1.25rem;
+   border-radius: 5px;
+   background-color: #f60;
+   vertical-align: middle;
+   transition: 200ms ease-in-out;
+}
+button:hover {
+   /*background-color: mediumblue;*/
+   /**style change*/
+   background-color: #f80;
 }
 button:disabled,
-button:disabled:hover{
-background-color:rgb(192, 192, 193);
-cursor:default;
+button:disabled:hover {
+   background-color: gray;
+   cursor: default;
 }
-.row{
-display:flex;
-align-items:center;
+.row {
+   display: flex;
+   align-items: center;
+   /**style change*/
+   background-color: #151515;
 }
-.thumb{
-width:100%;
+/**new style*/
+.row:nth-child(even) {
+   background-color: #000;
 }
-.rowLabel{
-flex:2 1 0;
-text-overflow:ellipsis;
-overflow:hidden;
-white-space:nowrap;
+.thumb {
+   width: 100%;
+   /**style change*/
+   filter: invert(1);
 }
-.sampleContainer{
-flex:1 1 0;
-background-color:white;
-text-align:center;
-border-radius:10%;
-margin:1px;
-overflow:hidden;
+.rowLabel {
+   flex: 2 1 0;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+   /**style change*/
+   width: 15%;
+   margin-left: 3rem;
+   font-weight: bold;
 }
-.blur{
-filter:blur(5px);
+.sampleContainer {
+   flex: 1 1 0;
+   text-align: center;
+   overflow: hidden;
+   /*background-color: white;
+   border-radius: 10%;
+   margin: 1px;*/
+   /**style change*/
+   margin: 2px;
+   outline: 2px solid #f60;
+   border-radius: 5px;
+   text-transform: capitalize;
+   max-width: 8%;
+}
+.blur {
+   /*filter: blur(5px);*/
+   /**style change*/
+   filter: invert(1) blur(5px);
 }
 
-.emphasize{
-background-color:yellow !important;
+.emphasize {
+   /*background-color: yellow !important;*/
+   /**style change*/
+   background-color: #AA0 !important;
 }
 
-#container{
-width:calc(100% - 400px);
+/**new style*/
+input,
+#instructions {
+   border: transparent;
+   outline: 2px solid #f60;
+   padding: 0.75rem 1.25rem;
+   border-radius: 5px;
+   background-color: #000;
+   color: black;
+   vertical-align: middle;
+   transition: 200ms ease-in-out;
+}
+#instructions {
+   margin-right: 0.75rem;
 }
 
-#chartContainer{
-position:fixed;
-right:0;
-top:50%;
-padding-right: 10px;
-transform:translate(0,-50%);
+#container {
+   width: calc(100% - 500px);
+}
+
+#chartContainer {
+   position: fixed;
+   right: 0;
+   top: 50%;
+   padding-right: calc(7%);
+   transform: translate(0, -30%);
+   /**new style*/
+   z-index: 2;
+   color: black;
+}
+
+#confusionContainer {
+   position: absolute;
+   right: 83px;
+   background-color: white;
+   z-index: 1;
+   position: fixed;
+   top: 50%;
+   transform: translate(0, -50%);
+   text-align: center;
+   margin: 10px;
+   /**new style*/
+   z-index: 1;
 }
 
 #inputContainer {
-position: fixed;
-right: 400px;
-top: 50%;
-transform:translate(0,-50%);
-text-align: center;
-margin: 10px;
+   position: fixed;
+   right: 500px;
+   top: 50%;
+   transform: translate(0, -50%);
+   text-align: center;
+   margin: 10px;
+   /**new style*/
+   z-index: 1;
 }
 
-#controlPanel{
-position:fixed;
-right:0;
-top: 0;
-width: 400px;
-text-align: center;
-padding: 10px;
+#controlPanel {
+   position: fixed;
+   right: 0;
+   top: 0;
+   width: 500px;
+   margin-block-start: 2.67em;
+   margin-block-end: 1.67em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+   text-align: center;
+   padding: 10px;
+   z-index: 1;
 }
-#predictedLabelContainer{
-color:white;
-font-size:30px;
-position:relative;
+
+#predictedLabelContainer {
+   color: white;
+   font-size: 30px;
+   position: relative;
+   z-index: 1;
 }
-#statistics{
-    padding: 20px;
+
+#statistics {
+   font-size: 20px;
+   padding: 20px;
+}
+h1{
+   padding-top: 60px;
+}
+
+.flagged {
+   background-color:red !important;
+}
+
+.infoButton {
+   color: red;
+   cursor: pointer;
+}
+
+.infoButton:hover .tooltipText {
+   visibility: visible;
+}
+
+.tooltipText {
+   color: white;
+   margin-left: 10px;
+   background-color: red;
+   position: absolute;
+   visibility: hidden;
+   font-size: small;
+   border-radius: 6px;
+   padding: 6px;
+   font-weight: normal;
 }

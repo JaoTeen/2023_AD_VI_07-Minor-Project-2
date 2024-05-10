@@ -2,18 +2,52 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <title>Data Viewer</title>
+      <title>Pixel Playground</title>
       <link rel="stylesheet" href="styles.css"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          var urlParams = new URLSearchParams(window.location.search);
+          var section = urlParams.get('section');
+    
+          if (section) {
+            setTimeout(function() {
+              window.location.hash = section;
+              console.log(section);
+            }, 1000);
+          }
+        });
+      </script>
    </head>
+    
    <body>
+      <nav>
+         <ul class="nav-list">
+           <li><a href="#">Home</a></li>
+           <li><a href="creator_page.html">Creator_Page</a></li>
+           <li class="dropdown">
+             <a href="#" class="dropbtn">Viewer_Page</a>
+             <div class="dropdown-content">
+               <a href="#tran_set">Training Dataset</a>
+               <a href="#test_set">Testing Dataset</a>
+             </div>
+           </li>
+           <li><a href="mailto:jatindadlani30@gmail.com?subject=Issue">Contact</a></li>
+         </ul>
+      </nav>
       <h1>Data Viewer</h1>
       <div id="inputContainer">
          <div id="predictedLabelContainer"></div>
       </div>
-      <div id="chartContainer"></div>
+      <div id="chartContainer">
+         <div id="confusionContainer"></div>
+      </div>
       <div id="controlPanel">
          <button id="toggleButton" onClick="toggleInput()">
             Toggle to Input Area
+         </button>
+         <button id="toggleButton2" onClick="toggleOutput()">
+            Toggle to Graph Output
          </button>
          <div id="statistics"></div>
       </div>
@@ -25,16 +59,19 @@
 
       <script src="../common/constants.js"></script>
       <script src="../common/utils.js"></script>
+      <script src="../common/geometry.js"></script>
       <script src="../common/draw.js"></script>
       <script src="../common/featureFunctions.js"></script>
       <script src="../common/classifiers/knn.js"></script>
 
       <script src="js/display.js"></script>
       <script src="js/sketchPad.js"></script>
+      <script src="js/dataCleaner.js"></script>
 
       <script src="./chart/graphics.js"></script>
       <script src="./chart/math.js"></script>
       <script src="./chart/chart.js"></script>
+      <script src="./chart/confusion.js"></script>
       
       <script>
          const {samples,featureNames}=features;
@@ -61,6 +98,11 @@
             utils.formatPercent(correctCount/totalCount)+")";
 
          //training part
+         const tran_subtitle=document.createElement("h2");
+         tran_subtitle.id="tran_set";
+         tran_subtitle.innerHTML="Training Part";
+         container.appendChild(tran_subtitle);
+
          const trainingGroups=utils.groupBy(trainingSamples,"student_id");
          
          for(let student_id in trainingGroups){
@@ -71,6 +113,7 @@
 
          const subtitle=document.createElement("h2");
          subtitle.innerHTML="Testing Part";
+         subtitle.id="test_set";
          container.appendChild(subtitle);
 
          //testing part
@@ -88,7 +131,6 @@
          for(let student_id in groups){
             const samples=groups[student_id];
             const studentName=samples[0].student_name;
-            createRow(container,studentName,samples);
          }
 
          const options={
@@ -97,7 +139,8 @@
             styles:utils.styles,
             transparency:0.7,
             icon:"image",
-            bg:new Image()
+            bg:new Image(),
+            hideSamples: true
          };
          options.bg.src=constants.DECISION_BOUNDARY;
          graphics.generateImages(utils.styles);
@@ -109,8 +152,15 @@
             handleClick
          );
 
+         const confusion = new Confusion(
+            confusionContainer,
+            testingSamples,
+            utils.classes,
+            options
+         );
+
          const sketchPad=new SketchPad(inputContainer,onDrawingUpdate);
-         sketchPad.canvas.style.cssText+="outline:10000px solid rgba(0,0,0,0.7);"
+         sketchPad.canvas.style.cssText+="outline: rgb(255 255 255 / 70%) solid 10000px;"
          toggleInput();
 
          function onDrawingUpdate(paths){
@@ -122,5 +172,6 @@
             chart.showDynamicPoint(point,label,nearestSamples);
          }
       </script>
+      
    </body>
 </html>

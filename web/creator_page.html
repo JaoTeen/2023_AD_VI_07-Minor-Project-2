@@ -3,15 +3,40 @@
   <head >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.9, user-scalable=0">
-    <title>Data Creators Page</title>
+    <title>Pixel Playground Creators Page</title>
     <link rel="stylesheet" href="./styles.css">
   </head>
-  <body>
-    <div id="content">
+  <body><br>
+    <nav>
+      <ul class="nav-list">
+        <li><a href="#">Home</a></li>
+        <li><a href="#!">Creator_Page</a></li>
+        <li class="dropdown">
+          <a href="viewer.html" class="dropbtn">Viewer_Page</a>
+          <div class="dropdown-content">
+            <a href="viewer.html?section=tran_set">Training Dataset</a>
+            <a href="viewer.html?section=test_set">Testing Dataset</a>
+          </div>
+        </li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    
+    
+    <script>
+    function delayedRedirect(page, section, delay) {
+      window.location.href = page;
+      setTimeout(function() {
+        window.location.href = page + section;
+      }, delay);
+    }
+    </script>
+    
+    <div id="content"><br>
         <h1>Data Creator</h1>
         <div>
           <input id="user_name" type="text" placeholder="type your name" />
-          <span id="instructions"></span>
+          <span id="instructions" style="display: none"></span>
           <button id="advBtn" onclick="start();">START</button>
           <button id="saveBtn" onclick="finish();" style="visibility: hidden;">SAVE</button>
         </div>
@@ -21,10 +46,10 @@
         </div>
     </div>
     <script src="js/sketchPad.js"></script>
-    <script src="../comman/draw.js"></script>
+    <script src="../common/draw.js"></script>
     <script>
 let index=0;
-let counter=0; // create a counter variable to store the number of labels
+let counter=-1; // create a counter variable to store the number of labels
 const labels=[]; // create an empty array to store user input labels
 
 const data={
@@ -54,6 +79,7 @@ function askLabel(){
     labels.push(userInput); // add the user input to the labels array
     counter++; // increment the counter
     const label=labels[index];
+    instructions.style.display = "initial";
     instructions.innerHTML="Please draw a \"" +label + "\"";
     advBtn.innerHTML="NEXT";
     advBtn.onclick=next;
