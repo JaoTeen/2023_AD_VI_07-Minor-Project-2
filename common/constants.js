@@ -22,6 +22,8 @@ constants.TRAINING_JS=constants.JS_OBJECTS+"/training.js";
 constants.TESTING_JS=constants.JS_OBJECTS+"/testing.js";
 constants.MIN_MAX_JS=constants.JS_OBJECTS+"/minMax.js";
 
+constants.MODELS_DIR=constants.DATA_DIR+"/models";
+
 if(typeof module!=='undefined'){
    module.exports=constants;
 }
